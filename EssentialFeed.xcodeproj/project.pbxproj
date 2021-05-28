@@ -75,10 +75,9 @@
 		E0D46F2E26615563000EC063 /* EssentialFeed */ = {
 			isa = PBXGroup;
 			children = (
-				E0D46F48266157B8000EC063 /* FeedItem.swift */,
+				E0D46F4C266159AE000EC063 /* FeedFeature */,
 				E0D46F2F26615563000EC063 /* EssentialFeed.h */,
 				E0D46F3026615563000EC063 /* Info.plist */,
-				E0D46F4A2661589B000EC063 /* FeedLoader.swift */,
 			);
 			path = EssentialFeed;
 			sourceTree = "<group>";
@@ -90,6 +89,15 @@
 				E0D46F3C26615563000EC063 /* Info.plist */,
 			);
 			path = EssentialFeedTests;
+			sourceTree = "<group>";
+		};
+		E0D46F4C266159AE000EC063 /* FeedFeature */ = {
+			isa = PBXGroup;
+			children = (
+				E0D46F48266157B8000EC063 /* FeedItem.swift */,
+				E0D46F4A2661589B000EC063 /* FeedLoader.swift */,
+			);
+			path = FeedFeature;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
