@@ -41,30 +41,14 @@ public final class RemoteFeedLoader {
 			}
 		}
 	}
-}
-
-private class FeedItemMapper {
-	private struct Root: Decodable {
-		let items: [item]
-	}
-
-	private struct item: Decodable {
-		public let id: UUID
-		public let description: String?
-		public let location: String?
-		public let image: URL
-
-		var item: FeedItem {
-			FeedItem(id: id, description: description, location: location, imageURL: image)
+	
+	private func map(_ data: Data, from response: HTTPURLResponse) -> Result {
+		do {
+		let item = try FeedItemMapper.map(data, response)
+			return .success(item)
+		} catch {
+			return .failure(.invalidData)
 		}
-	}
-
-	static func map(_ data: Data, _ response: HTTPURLResponse) throws -> [FeedItem] {
-		guard response.statusCode == 200 else {
-			throw RemoteFeedLoader.Error.invalidData
-		}
-		let root = try JSONDecoder().decode(Root.self, from: data)
-		return root.items.map({ $0.item })
 	}
 }
 
