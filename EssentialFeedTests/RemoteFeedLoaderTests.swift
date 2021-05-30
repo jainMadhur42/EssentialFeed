@@ -64,10 +64,10 @@ class RemoteFeedLoaderTests: XCTestCase {
 	
 	private func expect(_ sut: RemoteFeedLoader, toCompleteWithError error: RemoteFeedLoader.Error, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
 		
-		var capturedErrors = [RemoteFeedLoader.Error]()
-		sut.load { capturedErrors.append($0) }
+		var capturedResult = [RemoteFeedLoader.Result]()
+		sut.load { capturedResult.append($0) }
 		action()
-		XCTAssertEqual(capturedErrors, [error],file: file,line: line)
+		XCTAssertEqual(capturedResult, [.failure(error)],file: file,line: line)
 	}
 	
 	
@@ -82,7 +82,7 @@ class RemoteFeedLoaderTests: XCTestCase {
 		}
 		
 		func complete(with error: Error, at index: Int = 0) {
-			message[index].completion(.fail(error))
+			message[index].completion(.failure(error))
 		}
 		
 		func complete(withStatusCode code: Int, data: Data = Data(), at index: Int = 0) {

@@ -9,7 +9,7 @@ import Foundation
 
 public enum HTTPClientResult {
 	case success(Data, HTTPURLResponse)
-	case fail(Error)
+	case failure(Error)
 }
 
 public protocol HTTPClient {
@@ -25,17 +25,22 @@ public final class RemoteFeedLoader {
 		case invalidData
 	}
 	
+	public enum Result: Equatable {
+		case success([FeedItem])
+		case failure(Error)
+	}
+	
 	public init(url: URL, client: HTTPClient) {
 		self.client = client
 		self.url = url
 	}
-	public func load(completion: @escaping (Error) -> Void = {_ in }) {
+	public func load(completion: @escaping (Result) -> Void = {_ in }) {
 		client.get(from: url) { result in
 			switch result {
 			case .success:
-				completion(.invalidData)
-			case .fail:
-				completion(.connectivity)
+				completion(.failure(.invalidData))
+			case .failure:
+				completion(.failure(.connectivity))
 			}
 		
 		}
